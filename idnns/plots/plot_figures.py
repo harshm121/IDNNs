@@ -2,7 +2,7 @@
 import matplotlib
 matplotlib.use("TkAgg")
 import numpy as np
-import _pickle as cPickle
+import pickle as cPickle
 # import cPickle
 from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
@@ -14,11 +14,13 @@ import os
 import matplotlib.animation as animation
 import math
 import os.path
-import idnns.plots.utils as utils
-import tkinter as tk
+# import idnns.plots.utils as utils
+#This is what I have changed!!
+import utils as utils
+import Tkinter as tk
 from numpy import linalg as LA
 
-from tkinter import filedialog
+import tkFileDialog as filedialog
 LAYERS_COLORS  = ['red', 'blue', 'green', 'yellow', 'pink', 'orange']
 
 def plot_all_epochs(gen_data, I_XT_array, I_TY_array, axes, epochsInds, f, index_i, index_j, size_ind,
@@ -389,6 +391,7 @@ def plot_figures(str_names, mode, save_name):
     #Go over all the files
     for i in range(len(str_names)):
         for j in range(len(str_names[i])):
+            print i, j
             name_s = str_names[i][j]
             #Load data for the given file
             data_array = utils.get_data(name_s)
@@ -472,10 +475,17 @@ def update_axes(axes, xlabel, ylabel, xlim, ylim, title, xscale, yscale, x_ticks
                      set_xscale=True, yscale=yscale, xscale=xscale, ytick_labels=labels, genreal_scaling=True)
 
 
+# def extract_array(data, name):
+#     results = [[data[j,k][name] for k in range(data.shape[1])] for j in range(data.shape[0])]
+#     return results
 
 def extract_array(data, name):
-    results = [[data[j,k][name] for k in range(data.shape[1])] for j in range(data.shape[0])]
-    return results
+    if(len(data.shape)==2):
+        results = [[data[j,k][name] for k in range(data.shape[1])] for j in range(data.shape[0])]
+        return results
+    if(len(data.shape)==3):
+        results = [[sum([data[i,j,k][name] for i in range(data.shape[0])])/data.shape[0] for k in range(data.shape[2])] for j in range(data.shape[1])]
+        return results
 
 def update_bars_num_of_ts(num, p_ts, H_Xgt,DKL_YgX_YgT, axes, ind_array):
     axes[1].clear()
@@ -621,7 +631,7 @@ if __name__ == '__main__':
     sofix = '.pickle'
     prex2 = '/Users/ravidziv/PycharmProjects/IDNNs/jobs/'
     #plot above action, the norms, the gradients and the pearson coeffs
-    do_plot_action, do_plot_norms, do_plot_pearson = True, False, False
+    do_plot_action, do_plot_norms, do_plot_pearson = True, True, False
     do_plot_eig = False
     plot_movie = False
     do_plot_time_stepms = False
@@ -653,6 +663,7 @@ if __name__ == '__main__':
             #mode =0
             mode = 2
             str_names    = [[prex + 'ff4_1_10.pickle', prex + 'ff3_1_198.pickle']]
+            print str_names, "aaa"
         elif action == ALL_SAMPLES:
             save_name = ALL_SAMPLES
             mode =3

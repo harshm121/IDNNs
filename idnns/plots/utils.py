@@ -188,10 +188,12 @@ def get_data(name):
 	gen_data = {}
 	# new version
 	if os.path.isfile(name + 'data.pickle'):
+		print "here11"
 		curent_f = open(name + 'data.pickle', 'rb')
 		d2 = cPickle.load(curent_f)
 	# Old version
 	else:
+		print "here12"
 		curent_f = open(name, 'rb')
 		d1 = cPickle.load(curent_f)
 		data1 = d1[0]
@@ -226,10 +228,12 @@ def get_data(name):
 	gen_data = {}
 	# new version
 	if os.path.isfile(name + 'data.pickle'):
+		print "here13"
 		curent_f = open(name + 'data.pickle', 'rb')
 		d2 = cPickle.load(curent_f)
 	# Old version
 	else:
+		print "here14"
 		curent_f = open(name, 'rb')
 		d1 = cPickle.load(curent_f)
 		data1 = d1[0]

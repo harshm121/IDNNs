@@ -2,10 +2,12 @@
 import matplotlib
 matplotlib.use("TkAgg")
 import numpy as np
-import idnns.plots.utils as plt_ut
+# import idnns.plots.utils as plt_ut
+#This is what I have changed!!
+import utils as plt_ut
 import matplotlib.pyplot as plt
-import tkinter as tk
-from tkinter import filedialog
+import Tkinter as tk
+import tkFileDialog as filedialog
 from numpy import linalg as LA
 import os
 import sys
@@ -115,6 +117,7 @@ def plot_gradients(name_s=None, data_array=None, figures_dir=''):
         p_0.append(c_p0), p_1.append(c_p1),sum_y.append(y_mean) , p_3.append(c_p3), p_4.append(c_p4)
     plt_ut.adjust_axes(axes_log, axes_norms, p_0, p_1, f_log, f_norms, axes_snr, f_snr, p_3, axes_gaus, f_gaus, p_4,
                        directory_name=figures_dir)
+    plt.savefig(figures_dir+'/gradients.png')
     plt.show()
 
 
